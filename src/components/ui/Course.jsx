@@ -16,7 +16,7 @@ import {
 function Course() {
   return (
     <>
-      <div className="w-[90%] m-auto flex flex-col h-[100vh] gap-10 relative">
+      <div className="w-[full] px-10 m-auto flex flex-col h-[100vh] gap-10 relative">
         <div className="top text-[28px] text-[#83858B]">
           <span>Courses</span>
         </div>
@@ -94,7 +94,7 @@ function Course() {
           </div>
         </div>
 
-        <div className="add-btn absolute right-0 bottom-10 ">
+        <div className="add-btn absolute right-10 bottom-10 ">
           <Button className="bg-[#fec0ca] p-6 rounded-lg flex flex-row gap-3 text-black hover:text-white">
             <span className="text-2xl">+</span>Add Course
           </Button>

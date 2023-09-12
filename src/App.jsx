@@ -1,12 +1,11 @@
 import "./App.css";
+import Sidebar from "./components/ui/Sidebar";
 
-import Course from "./components/ui/Course";
 
 
 function App() {
   return (
-
-    <Course/>
+<Sidebar/>
   );
 }
 

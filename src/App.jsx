@@ -1,12 +1,12 @@
 import "./App.css";
-import Abuosama from "./components/ui/Abuosama";
+
+import Course from "./components/ui/Course";
+
+
 function App() {
-
-
   return (
-    <>
-    <Abuosama/>
-    </>
+
+    <Course/>
   );
 }
 

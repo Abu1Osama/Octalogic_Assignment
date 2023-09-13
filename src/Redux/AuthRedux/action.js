@@ -47,6 +47,7 @@ export const signupUser = (userData, navigate) => async (dispatch) => {
       userData
     );
     dispatch(signupSuccess(response.data));
+    console.log(response.data)
     navigate("/");
     console.log(response.data);
   } catch (error) {

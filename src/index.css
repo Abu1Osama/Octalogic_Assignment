@@ -9,6 +9,14 @@
   background-color: rgba(0, 0, 0, 0.4);
 
 }
+.abc{
+  background-color: rgba(200, 200, 200, 0.4);
+  backdrop-filter: blur(50%)
+
+}
+.red-bg{
+  background-color: red;
+}
  
 @layer base {
   :root {

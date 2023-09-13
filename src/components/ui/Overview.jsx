@@ -13,12 +13,78 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCourses, getEnroll } from "../../Redux/CourseRedux/action";
 
 function Overview() {
+  const topCoursesData =
+    JSON.parse(localStorage.getItem("topCoursesData")) || [];
+  console.log(topCoursesData);
   const dispatch = useDispatch();
   const overview = useSelector((store) => store.courses.enrollment);
+  const courses = useSelector((store) => store.courses.courses);
+  console.log(courses);
+  const formattedData = topCoursesData.map((course) => {
+    const Fees = course.totalFees;
+    return {
+      coursecount: course.count,
+      F_Name: course.data[0].First_Name,
+      L_Name: course.data[0].last_name,
+      Reg_Date: course.data[0].reddate,
+      regno: course.data[0].regno,
+      Fees: Fees,
+    };
+  });
+
+  console.log(formattedData);
 
   useEffect(() => {
     dispatch(getEnroll(overview));
+    dispatch(getCourses());
   }, []);
+
+  const courseDataMap = {};
+  overview.forEach((item) => {
+    const courseName = item.name;
+    if (courseDataMap[courseName]) {
+      courseDataMap[courseName].push(item);
+    } else {
+      courseDataMap[courseName] = [item];
+    }
+  });
+
+  const courseDataArray = Object.keys(courseDataMap).map((courseName) => ({
+    name: courseName,
+    count: courseDataMap[courseName].length,
+    data: courseDataMap[courseName],
+  }));
+
+  const courseTotalFees = {};
+  courseDataArray.forEach((courseData) => {
+    const course = courses.find((c) => c.name === courseData.name);
+    if (course) {
+      const totalFees = courseData.data.reduce(
+        (acc, item) => acc + +course.price,
+        0
+      );
+      courseTotalFees[courseData.name] = totalFees;
+    }
+  });
+
+  const sortedCourses = courseDataArray.sort((a, b) => b.count - a.count);
+
+  const top5Courses = sortedCourses.slice(0, 5);
+
+  useEffect(() => {
+    const top5CoursesWithMoreThanOneName = top5Courses.filter(
+      (course) => course.count > 1
+    );
+
+    const courseDataToStore = top5CoursesWithMoreThanOneName.map((course) => ({
+      name: course.name,
+      count: course.count,
+      totalFees: courseTotalFees[course.name],
+      data: course.data,
+    }));
+
+    localStorage.setItem("topCoursesData", JSON.stringify(courseDataToStore));
+  }, [top5Courses, courseTotalFees]);
 
   return (
     <>
@@ -265,28 +331,28 @@ function Overview() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {overview.slice(0, 5).map((item) => (
+                  {formattedData.map((item) => (
                     <TableRow className="osama border-b-[ #E5E7EB] text-sm p-0">
                       <TableCell className="py-2" style={{ width: "16.66%" }}>
                         {item.regno}
                       </TableCell>
                       <TableCell className="py-2" style={{ width: "16.66%" }}>
-                        {item.First_Name}
+                        {item.F_Name}
                       </TableCell>
                       <TableCell className="py-2" style={{ width: "16.66%" }}>
-                        {item.last_name}
+                        {item.L_Name}
                       </TableCell>
                       <TableCell className="py-2" style={{ width: "16.66%" }}>
-                        3
+                        {item.coursecount}
                       </TableCell>
                       <TableCell className="py-2" style={{ width: "16.66%" }}>
-                        $300
+                        ${item.Fees}
                       </TableCell>
                       <TableCell
                         className="text-right py-1"
                         style={{ width: "16.66%" }}
                       >
-                        {item.reddate}
+                        {item.Reg_Date}
                       </TableCell>
                     </TableRow>
                   ))}

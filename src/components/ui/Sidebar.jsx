@@ -45,7 +45,7 @@ function Sidebar() {
     dispatch(logoutUser());
   };
   return (
-    <div className="flex flex-row h-[100vh] " id="page">
+    <div className=" fixed w-full flex flex-row h-[100vh] " id="page">
       <div
         className={`w-[96px] h-[100%] flex flex-col gap-8 py-3 items-center ${
           sidebartabVisible ? "block" : "hidden"

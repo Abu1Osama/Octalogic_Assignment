@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { addCourse } from "../../Redux/CourseRedux/action";
 
 function CourseForm({ onClose }) {
   const dispatch = useDispatch();
@@ -30,9 +31,9 @@ function CourseForm({ onClose }) {
     });
   };
   const submitCourseData = () => {
-    // addCourse(courseData);
+    addCourse(courseData);
 
-    // onClose();
+    onClose();
     console.log(courseData)
   };
 
@@ -43,7 +44,7 @@ function CourseForm({ onClose }) {
       <div className="bg-white border p-3 flex flex-col gap-4 w-[40%] m-auto rounded-2xl">
         <h2 className=" text-[22px] text-[#212529]">Add Course</h2>
         <div className="flex flex-col gap-2">
-            <form >
+            <form className="flex flex-col gap-2" onSubmit={submitCourseData}>
 
           <Input
             className="text[12px] text-[#83858B]"

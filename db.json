@@ -8,7 +8,7 @@
         "instrument": "Guitar",
         "dayOfWeek": "Monday",
         "price": "25.0",
-        "status": "active"
+        "status": "ctive"
     },
     {
         "id": 2,
@@ -28,7 +28,7 @@
         "instrument": "Piano",
         "dayOfWeek": "Wednesday",
         "price": "35.0",
-        "status": "active"
+        "status": "Closed"
     },
     {
         "id": 4,

@@ -33,7 +33,7 @@ Music_School Web Application! is a web application designed to store the data of
 
 ## Deployment
 
-Deployed Link:-
+Deployed Link:-https://octaassignment.vercel.app
 
 ## Getting Started
 
@@ -68,7 +68,7 @@ npm run dev
 
 ## Usage
 
-- Visit the application in your web browser at http://localhost:3000 or the URL  .
+- Visit the application in your web browser at http://localhost:3000 or the URL https://octaassignment.vercel.app  .
 1. Browse a collection of courses.
 2. toggle the course status.
 3. Add new Courses.

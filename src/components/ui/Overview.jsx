@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -9,8 +9,17 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import user from "../../assets/ic_baseline-people.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { getCourses, getEnroll } from "../../Redux/CourseRedux/action";
 
 function Overview() {
+  const dispatch = useDispatch();
+  const overview = useSelector((store) => store.courses.enrollment);
+
+  useEffect(() => {
+    dispatch(getEnroll(overview));
+  }, []);
+
   return (
     <>
       <div className="w-[full] px-10 m-auto flex flex-col h-[100vh] overflow-auto gap-10 relative">
@@ -28,7 +37,9 @@ function Overview() {
               </div>
 
               <div className="flex flex-col">
-                <span className="text-[22px] font-normal">164</span>
+                <span className="text-[22px] font-normal">
+                  {overview.length}
+                </span>
                 <span className="text-[12px] text-[#83858B]">
                   from $4400 last month
                 </span>
@@ -171,106 +182,28 @@ function Overview() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  <TableRow className="osama border-b-[ #E5E7EB] text-sm p-0">
-                    <TableCell className="py-2" style={{ width: "20%" }}>
-                      1563124
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "20%" }}>
-                      John Doe
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "20%" }}>
-                      Percussion
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "20%" }}>
-                      $120
-                    </TableCell>
-                    <TableCell
-                      className="text-right py-1"
-                      style={{ width: "20%" }}
-                    >
-                      12-08-223
-                    </TableCell>
-                  </TableRow>
-                  <TableRow className="osama border-b-[ #E5E7EB] text-sm p-0">
-                    <TableCell className="py-2" style={{ width: "20%" }}>
-                      1563124
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "20%" }}>
-                      John Doe
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "20%" }}>
-                      Percussion
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "20%" }}>
-                      $120
-                    </TableCell>
-                    <TableCell
-                      className="text-right py-1"
-                      style={{ width: "20%" }}
-                    >
-                      12-08-223
-                    </TableCell>
-                  </TableRow>
-                  <TableRow className="osama border-b-[ #E5E7EB] text-sm p-0">
-                    <TableCell className="py-2" style={{ width: "20%" }}>
-                      1563124
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "20%" }}>
-                      John Doe
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "20%" }}>
-                      Percussion
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "20%" }}>
-                      $120
-                    </TableCell>
-                    <TableCell
-                      className="text-right py-1"
-                      style={{ width: "20%" }}
-                    >
-                      12-08-223
-                    </TableCell>
-                  </TableRow>
-                  <TableRow className="osama border-b-[ #E5E7EB] text-sm p-0">
-                    <TableCell className="py-2" style={{ width: "20%" }}>
-                      1563124
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "20%" }}>
-                      John Doe
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "20%" }}>
-                      Percussion
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "20%" }}>
-                      $120
-                    </TableCell>
-                    <TableCell
-                      className="text-right py-1"
-                      style={{ width: "20%" }}
-                    >
-                      12-08-223
-                    </TableCell>
-                  </TableRow>
-                  <TableRow className="osama border-b-[ #E5E7EB] text-sm p-0">
-                    <TableCell className="py-2" style={{ width: "20%" }}>
-                      1563124
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "20%" }}>
-                      John Doe
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "20%" }}>
-                      Percussion
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "20%" }}>
-                      $120
-                    </TableCell>
-                    <TableCell
-                      className="text-right py-1"
-                      style={{ width: "20%" }}
-                    >
-                      12-08-223
-                    </TableCell>
-                  </TableRow>
+                  {overview.slice(0, 5).map((item) => (
+                    <TableRow className="osama border-b-[ #E5E7EB] text-sm p-0">
+                      <TableCell className="py-2" style={{ width: "20%" }}>
+                        {item.enrno}
+                      </TableCell>
+                      <TableCell className="py-2" style={{ width: "20%" }}>
+                        {item.First_Name + " " + item.last_name}
+                      </TableCell>
+                      <TableCell className="py-2" style={{ width: "20%" }}>
+                        {item.name}
+                      </TableCell>
+                      <TableCell className="py-2" style={{ width: "20%" }}>
+                        $123
+                      </TableCell>
+                      <TableCell
+                        className="text-right py-1"
+                        style={{ width: "20%" }}
+                      >
+                        {item.EnrDate}
+                      </TableCell>
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             </div>
@@ -332,121 +265,31 @@ function Overview() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  <TableRow className="osama border-b-[ #E5E7EB] text-sm p-0">
-                    <TableCell className="py-2" style={{ width: "16.66%" }}>
-                      43422
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "16.66%" }}>
-                      John
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "16.66%" }}>
-                      Doe
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "16.66%" }}>
-                      3
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "16.66%" }}>
-                      $300
-                    </TableCell>
-                    <TableCell
-                      className="text-right py-1"
-                      style={{ width: "16.66%" }}
-                    >
-                      01-6-2023
-                    </TableCell>
-                  </TableRow>
-                  <TableRow className="osama border-b-[ #E5E7EB] text-sm p-0">
-                    <TableCell className="py-2" style={{ width: "16.66%" }}>
-                      43422
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "16.66%" }}>
-                      John
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "16.66%" }}>
-                      Doe
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "16.66%" }}>
-                      3
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "16.66%" }}>
-                      $300
-                    </TableCell>
-                    <TableCell
-                      className="text-right py-1"
-                      style={{ width: "16.66%" }}
-                    >
-                      01-6-2023
-                    </TableCell>
-                  </TableRow>
-                  <TableRow className="osama border-b-[ #E5E7EB] text-sm p-0">
-                    <TableCell className="py-2" style={{ width: "16.66%" }}>
-                      43422
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "16.66%" }}>
-                      John
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "16.66%" }}>
-                      Doe
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "16.66%" }}>
-                      3
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "16.66%" }}>
-                      $300
-                    </TableCell>
-                    <TableCell
-                      className="text-right py-1"
-                      style={{ width: "16.66%" }}
-                    >
-                      01-6-2023
-                    </TableCell>
-                  </TableRow>
-                  <TableRow className="osama border-b-[ #E5E7EB] text-sm p-0">
-                    <TableCell className="py-2" style={{ width: "16.66%" }}>
-                      43422
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "16.66%" }}>
-                      John
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "16.66%" }}>
-                      Doe
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "16.66%" }}>
-                      3
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "16.66%" }}>
-                      $300
-                    </TableCell>
-                    <TableCell
-                      className="text-right py-1"
-                      style={{ width: "16.66%" }}
-                    >
-                      01-6-2023
-                    </TableCell>
-                  </TableRow>
-                  <TableRow className="osama border-b-[ #E5E7EB] text-sm p-0">
-                    <TableCell className="py-2" style={{ width: "16.66%" }}>
-                      43422
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "16.66%" }}>
-                      John
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "16.66%" }}>
-                      Doe
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "16.66%" }}>
-                      3
-                    </TableCell>
-                    <TableCell className="py-2" style={{ width: "16.66%" }}>
-                      $300
-                    </TableCell>
-                    <TableCell
-                      className="text-right py-1"
-                      style={{ width: "16.66%" }}
-                    >
-                      01-6-2023
-                    </TableCell>
-                  </TableRow>
+                  {overview.slice(0, 5).map((item) => (
+                    <TableRow className="osama border-b-[ #E5E7EB] text-sm p-0">
+                      <TableCell className="py-2" style={{ width: "16.66%" }}>
+                        {item.regno}
+                      </TableCell>
+                      <TableCell className="py-2" style={{ width: "16.66%" }}>
+                        {item.First_Name}
+                      </TableCell>
+                      <TableCell className="py-2" style={{ width: "16.66%" }}>
+                        {item.last_name}
+                      </TableCell>
+                      <TableCell className="py-2" style={{ width: "16.66%" }}>
+                        3
+                      </TableCell>
+                      <TableCell className="py-2" style={{ width: "16.66%" }}>
+                        $300
+                      </TableCell>
+                      <TableCell
+                        className="text-right py-1"
+                        style={{ width: "16.66%" }}
+                      >
+                        {item.reddate}
+                      </TableCell>
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             </div>

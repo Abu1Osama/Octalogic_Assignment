@@ -1,11 +1,12 @@
+import { useSelector } from "react-redux";
 import "./App.css";
-import Sidebar from "./components/ui/Sidebar";
-
-
+import AllRoutes from "./Routes/AllRoutes";
 
 function App() {
   return (
-<Sidebar/>
+    <>
+      <AllRoutes />
+    </>
   );
 }
 

@@ -1,7 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.bluish{
+  background-color: #FEDFE1;
+  backdrop-filter: blur(10px)
+}
+.coursecol{
+  background-color: rgba(0, 0, 0, 0.4);
 
+}
  
 @layer base {
   :root {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import dots from "../../assets/Vector (6).png";
@@ -12,11 +12,44 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getCourses, getEnroll } from "../../Redux/CourseRedux/action";
 
-function Course() {
+function Course({ opencourse }) {
+  const dispatch = useDispatch();
+  const courses = useSelector((store) => store.courses.courses);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [displayedCourses, setDisplayedCourses] = useState([]);
+  const [searchTriggered, setSearchTriggered] = useState(false);
+
+  useEffect(() => {
+    dispatch(getCourses(courses));
+  }, []);
+
+  useEffect(() => {
+    setDisplayedCourses(courses.slice(0, 10));
+  }, [courses]);
+
+  useEffect(() => {
+    if (searchTriggered) {
+      const filtered = courses.filter((course) =>
+        Object.values(course).some((value) =>
+          value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      );
+      setDisplayedCourses(filtered);
+    }
+  }, [searchQuery, courses, searchTriggered]);
+
+  const handleSearchIconClick = () => {
+    setSearchTriggered(true);
+  };
+
+  
   return (
     <>
-      <div className="w-[full] px-10 m-auto flex flex-col h-[100vh] gap-10 relative">
+      <div className="w-[full] px-10 m-auto flex flex-col h-auto  gap-10 relative">
         <div className="top text-[28px] text-[#83858B]">
           <span>Courses</span>
         </div>
@@ -30,8 +63,15 @@ function Course() {
                 className="px-8 text-sm text-[#83858B]"
                 type="email"
                 placeholder="Search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <img className="absolute top-3.5 left-2" src={magnify} alt="" />
+              <img
+                onClick={handleSearchIconClick}
+                className="absolute top-3.5 left-2"
+                src={magnify}
+                alt=""
+              />
             </div>
           </div>
           <div
@@ -41,7 +81,7 @@ function Course() {
             <Table>
               <TableHeader>
                 <TableRow className="text-sm">
-                  <TableHead className="w-[100px]">Name</TableHead>
+                  <TableHead className="">Name</TableHead>
                   <TableHead>Description</TableHead>
                   <TableHead>Instructor</TableHead>
                   <TableHead>Instrument</TableHead>
@@ -55,48 +95,36 @@ function Course() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                <TableRow className="osama border-b-[ #E5E7EB] text-sm p-0 ">
-                  <TableCell className="py-0 ">Course</TableCell>
-                  <TableCell className="py-0 ">Instructor</TableCell>
-                  <TableCell className="py-0 ">Instructor</TableCell>
-                  <TableCell className="py-0 ">Instructor</TableCell>
-                  <TableCell className="py-0 ">Instructor</TableCell>
-                  <TableCell className="py-0 ">Instructor</TableCell>
-                  <TableCell className="py-0 ">Instructor</TableCell>
-                  <TableCell className="py-0 ">
-                    <span className="bg-[#CFF9DF] px-4 rounded-md text-[#83858B] py-1">
-                      Active
-                    </span>
-                  </TableCell>
-                  <TableCell className="flex flex-row justify-center">
-                    <img className="oso cursor-pointer" src={dots} alt="" />
-                  </TableCell>
-                </TableRow>
-                <TableRow className="osama border-b-[ #E5E7EB] text-sm p-0 ">
-                  <TableCell className="py-0 text-[#212529] ">Course</TableCell>
-                  <TableCell className="py-0 ">Instructor</TableCell>
-                  <TableCell className="py-0 ">Instructor</TableCell>
-                  <TableCell className="py-0 ">Instructor</TableCell>
-                  <TableCell className="py-0 ">Instructor</TableCell>
-                  <TableCell className="py-0 ">Instructor</TableCell>
-                  <TableCell className="py-0 ">Instructor</TableCell>
-                  <TableCell className="py-0 ">
-                    <span className="bg-[#CFF9DF] px-4 rounded-md text-[#83858B] py-1">
-                      Active
-                    </span>
-                  </TableCell>
-                  <TableCell className="flex flex-row justify-center">
-                    <img className="oso cursor-pointer" src={dots} alt="" />
-                  </TableCell>
-                </TableRow>
+                {displayedCourses.map((item) => (
+                  <TableRow className="osama border-b-[ #E5E7EB] text-sm p-0 " key={item.id}>
+                    <TableCell className="py-0 ">{item.name}</TableCell>
+                    <TableCell className="py-0 ">{item.name}</TableCell>
+                    <TableCell className="py-0 ">{item.instructor}</TableCell>
+                    <TableCell className="py-0 ">{item.instrument}</TableCell>
+                    <TableCell className="py-0 ">Monday</TableCell>
+                    <TableCell className="py-0 "></TableCell>
+                    <TableCell className="py-0 ">${item.price}</TableCell>
+                    <TableCell className="py-0 ">
+                      <span className="bg-[#CFF9DF] px-4 rounded-md text-[#83858B] py-1">
+                        {item.status}
+                      </span>
+                    </TableCell>
+                    <TableCell className="flex flex-row justify-center">
+                      <img className="oso cursor-pointer" src={dots} alt="" />
+                    </TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </div>
         </div>
 
-        <div className="add-btn absolute right-10 bottom-10 ">
+        <div className="add-btn absolute right-10 -bottom-40 ">
           <Button className="bg-[#fec0ca] p-6 rounded-lg flex flex-row gap-3 text-black hover:text-white">
-            <span className="text-2xl">+</span>Add Course
+            <span onClick={opencourse} className="text-2xl">
+              +
+            </span>
+            Add Course
           </Button>
         </div>
       </div>

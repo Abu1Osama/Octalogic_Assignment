@@ -228,7 +228,7 @@ function Course({ opencourse }) {
           </div>
         </div>
 
-        <div className="add-btn absolute right-10 -bottom-40 ">
+        <div className="add-btn absolute right-10 -bottom-32 ">
           <Button className="bg-[#fec0ca] p-6 rounded-lg flex flex-row gap-3 text-black hover:text-white">
             <span onClick={opencourse} className="text-2xl">
               +

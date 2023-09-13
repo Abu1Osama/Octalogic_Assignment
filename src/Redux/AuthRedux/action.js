@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import * as ActionTypes from "../ActionType";
+import toast from "react-hot-toast";
 export const signinRequest = () => ({ type: ActionTypes.SIGNIN_REQUEST });
 export const signinSuccess = (userData) => ({
   type: ActionTypes.SIGNIN_SUCCESS,
@@ -20,11 +21,30 @@ export const signinUser = (userData, navigate) => async (dispatch) => {
       userData
     );
     dispatch(signinSuccess(response.data));
-    console.log(response.data);
+
+  
     localStorage.setItem("logintoken",response.data.token)
+    toast.success("User Login successfully !", {
+      style: {
+        borderRadius: "50px",
+        background: "#000428",
+        color: "#ffffff",
+        padding: "1rem 1.5rem",
+        fontWeight: "600",
+      },
+    });
     navigate("/sidebar");
   } catch (error) {
     dispatch(signinError(error.response.data.error));
+    toast.error("use Correct Credential", {
+      style: {
+        borderRadius: "50px",
+        background: "#000428",
+        color: "#ffffff",
+        padding: "1rem 1.5rem",
+        fontWeight: "600",
+      },
+    });
   }
 };
 
@@ -46,13 +66,23 @@ export const signupUser = (userData, navigate) => async (dispatch) => {
       "https://userauthentication-oqxf.onrender.com/users/register",
       userData
     );
-    dispatch(signupSuccess(response.data));
-    console.log(response.data)
+    dispatch(signupSuccess(response.data)).
+  
     navigate("/");
     console.log(response.data);
   } catch (error) {
     dispatch(signupError(error.response.data.error));
-    console.log(error.response.data.error);
+    toast.error("Network Error ,Went wrong", {
+      style: {
+        borderRadius: "50px",
+        background: "#000428",
+        color: "#ffffff",
+        padding: "1rem 1.5rem",
+        fontWeight: "600",
+      },
+    });
+    
+    console.log(error);
   }
 };
 
@@ -64,4 +94,13 @@ export const logoutUser = () => (dispatch) => {
 
   dispatch(logoutSuccess());
   localStorage.removeItem("logintoken")
+  toast.success("User Logout Please login !", {
+    style: {
+      borderRadius: "50px",
+      background: "#000428",
+      color: "#ffffff",
+      padding: "1rem 1.5rem",
+      fontWeight: "600",
+    },
+  });
 };

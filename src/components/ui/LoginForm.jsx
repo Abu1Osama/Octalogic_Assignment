@@ -15,11 +15,14 @@ const LoginForm = () => {
     const userData = { email, password };
     dispatch(signinUser(userData,navigate))
   };
+  const tosignup=()=>{
+    navigate("/signup")
+  }
 
   return (
     <div className="bluish  h-[100vh] p-20">
       <div className="bg-white border p-10 flex flex-col gap-5 w-[30%] m-auto rounded-2xl">
-        <h2 className="text-center">Login</h2>
+        <h2 className="text-center text-2xl font-bold">Login</h2>
         <div className="flex flex-col gap-5">
           <Input
             type="email"
@@ -34,7 +37,7 @@ const LoginForm = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <Button onClick={handleLogin}>Login</Button>
-          <a className="text-[#83858B]" href="/signup">New user</a>
+          <span onClick={tosignup} className="text-[#83858B]" >New user</span>
         </div>
       </div>
     </div>
